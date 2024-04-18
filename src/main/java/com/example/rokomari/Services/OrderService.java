@@ -2,12 +2,12 @@ package com.example.rokomari.Services;
 
 import com.example.rokomari.DTO.BookDto;
 import com.example.rokomari.DTO.OrderDto;
+import com.example.rokomari.DTO.OrderSummaryDto;
 import com.example.rokomari.DTO.UserDto;
 import com.example.rokomari.Entities.Book;
 import com.example.rokomari.Entities.Order;
+import com.example.rokomari.Entities.OrderSummary;
 import com.example.rokomari.Entities.User;
-import com.example.rokomari.Repository.BookRepo;
-import com.example.rokomari.Repository.OrderRepo;
 import com.example.rokomari.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,8 +53,14 @@ public class OrderService {
        for(Book book : order.getBooks()){
           bookDtoList.add(mapBookDto(book));
        }
-        OrderDto orderDto = new OrderDto(order.getOrderId(),order.getOrderDate(),order.getBooks().size(),bookDtoList);
+        OrderDto orderDto = new OrderDto(order.getOrderId(),order.getOrderDate(),order.getBooks().size(),bookDtoList,mapOderSummeryDto(order));
         return orderDto;
+    }
+    public OrderSummaryDto mapOderSummeryDto(Order order){
+        OrderSummary orderSummary = new OrderSummary(order);
+        orderSummary.setShipping(70);
+        OrderSummaryDto orderSummeryDto = new OrderSummaryDto(orderSummary.getTotalItems(), orderSummary.getSubtotal(), orderSummary.getAfterDiscount(), orderSummary.getShipping());
+        return orderSummeryDto;
     }
 
 }

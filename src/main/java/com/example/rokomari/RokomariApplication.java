@@ -10,4 +10,5 @@ public class RokomariApplication {
         SpringApplication.run(RokomariApplication.class, args);
     }
 
+
 }
